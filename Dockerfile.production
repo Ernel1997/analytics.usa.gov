@@ -1,4 +1,4 @@
-FROM nginx:1.13.0
+FROM nginx:1.22
 
 # Install ruby and bundler
 RUN apt-get update
