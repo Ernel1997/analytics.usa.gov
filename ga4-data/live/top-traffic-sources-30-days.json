@@ -1,0 +1,167 @@
+{
+  "name": "top-traffic-sources-30-days",
+  "query": {
+    "dimensions": [
+      {
+        "name": "sessionSource"
+      },
+      {
+        "name": "sessionDefaultChannelGroup"
+      },
+      {
+        "name": "sessionMedium"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "sessions"
+      }
+    ],
+    "orderBys": [
+      {
+        "metric": {
+          "metricName": "sessions"
+        },
+        "desc": true
+      }
+    ],
+    "dateRanges": [
+      {
+        "startDate": "30daysAgo",
+        "endDate": "yesterday"
+      }
+    ],
+    "limit": "20",
+    "property": "properties/393249053"
+  },
+  "meta": {
+    "name": "Top Traffic Sources (30 Days)",
+    "description": "Top 20 traffic sources for the last 30 days, measured by visits, for all sites."
+  },
+  "data": [
+    {
+      "source": "google",
+      "session_default_channel_group": "Organic Search",
+      "sessionMedium": "organic",
+      "visits": "696959668"
+    },
+    {
+      "source": "(direct)",
+      "session_default_channel_group": "Direct",
+      "sessionMedium": "(none)",
+      "visits": "666971012"
+    },
+    {
+      "source": "bing",
+      "session_default_channel_group": "Organic Search",
+      "sessionMedium": "organic",
+      "visits": "49208677"
+    },
+    {
+      "source": "google",
+      "session_default_channel_group": "Paid Search",
+      "sessionMedium": "cpc",
+      "visits": "22870224"
+    },
+    {
+      "source": "(not set)",
+      "session_default_channel_group": "Unassigned",
+      "sessionMedium": "(not set)",
+      "visits": "12513641"
+    },
+    {
+      "source": "yahoo",
+      "session_default_channel_group": "Organic Search",
+      "sessionMedium": "organic",
+      "visits": "10312209"
+    },
+    {
+      "source": "duckduckgo",
+      "session_default_channel_group": "Organic Search",
+      "sessionMedium": "organic",
+      "visits": "5960391"
+    },
+    {
+      "source": "other",
+      "session_default_channel_group": "Email",
+      "sessionMedium": "email",
+      "visits": "4932586"
+    },
+    {
+      "source": "govdelivery",
+      "session_default_channel_group": "Email",
+      "sessionMedium": "email",
+      "visits": "4358042"
+    },
+    {
+      "source": "expected",
+      "session_default_channel_group": "Email",
+      "sessionMedium": "email",
+      "visits": "2193918"
+    },
+    {
+      "source": "outfordelivery",
+      "session_default_channel_group": "Email",
+      "sessionMedium": "email",
+      "visits": "1929680"
+    },
+    {
+      "source": "IDme",
+      "session_default_channel_group": "Unassigned",
+      "sessionMedium": "web",
+      "visits": "1269457"
+    },
+    {
+      "source": "google_dv360",
+      "session_default_channel_group": "Paid Other",
+      "sessionMedium": "cpc",
+      "visits": "1250287"
+    },
+    {
+      "source": "bing",
+      "session_default_channel_group": "Paid Search",
+      "sessionMedium": "cpc",
+      "visits": "1215423"
+    },
+    {
+      "source": "delivered",
+      "session_default_channel_group": "Email",
+      "sessionMedium": "email",
+      "visits": "1036248"
+    },
+    {
+      "source": "baidu",
+      "session_default_channel_group": "Organic Search",
+      "sessionMedium": "organic",
+      "visits": "1007116"
+    },
+    {
+      "source": "feature",
+      "session_default_channel_group": "Email",
+      "sessionMedium": "email",
+      "visits": "948411"
+    },
+    {
+      "source": "facebook",
+      "session_default_channel_group": "Organic Social",
+      "sessionMedium": "social",
+      "visits": "780390"
+    },
+    {
+      "source": "(other)",
+      "session_default_channel_group": "(other)",
+      "sessionMedium": "(other)",
+      "visits": "694471"
+    },
+    {
+      "source": "ecosia.org",
+      "session_default_channel_group": "Organic Search",
+      "sessionMedium": "organic",
+      "visits": "605161"
+    }
+  ],
+  "totals": {
+    "visits": 1487017012
+  },
+  "taken_at": "2024-03-08T15:28:00.245Z"
+}

@@ -1,5 +1,4 @@
 .*.sw?
-todo.txt
 .env
 .DS_Store
 *.log
@@ -14,4 +13,9 @@ _site
 /*.map
 /work
 /dist
-node_modules
+/node_modules
+/assets/uswds
+Dockerfile
+Dockerfile.production
+/check
+.nyc_output

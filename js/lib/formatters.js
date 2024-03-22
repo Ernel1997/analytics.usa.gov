@@ -1,4 +1,4 @@
-import d3 from 'd3';
+import d3 from "d3";
 // common parsing and formatting functions
 
 /*
@@ -6,14 +6,14 @@ import d3 from 'd3';
  * removes additional zeros from big number
  */
 function trimZeroes(str) {
-  return str.replace(/\.0+$/, '');
+  return str.replace(/\.0+$/, "");
 }
 
 /*
  * @function addCommas
  * wrapper for the d3.format to put in commas
  */
-const addCommas = d3.format(',');
+const addCommas = d3.format(",");
 
 function formatPrefix(suffixes) {
   if (!suffixes) return addCommas;
@@ -21,57 +21,98 @@ function formatPrefix(suffixes) {
     const prefix = d3.formatPrefix(visits);
     const suffix = suffixes[prefix.symbol];
     return prefix && suffix
-      ? prefix.scale(visits)
-        .toFixed(suffix[1])
-        .replace(/\.0+$/, '') + suffix[0] : addCommas(visits);
+      ? prefix.scale(visits).toFixed(suffix[1]).replace(/\.0+$/, "") + suffix[0]
+      : addCommas(visits);
   };
 }
 
 function formatVisits() {
   return formatPrefix({
-    k: ['k', 1], // thousands
-    M: ['m', 1], // millions
-    G: ['b', 2], // billions
+    k: ["k", 1], // thousands
+    M: ["m", 1], // millions
+    G: ["b", 2], // billions
   });
 }
 
 function readableBigNumber(total) {
   const formatter = formatPrefix({
-    M: [' million', 1], // millions
-    G: [' billion', 2], // billions
+    M: [" million", 1], // millions
+    G: [" billion", 2], // billions
   });
   return formatter(total);
 }
 
 function floatToPercent(p) {
-  return p >= 0.1
-    ? `${trimZeroes(p.toFixed(1))}%`
-    : '< 0.1%';
+  return p >= 0.1 ? `${trimZeroes(p.toFixed(1))}%` : "< 0.1%";
 }
 
 function formatHour(hour) {
   const n = +hour;
-  const suffix = n >= 12 ? 'p' : 'a';
+  const suffix = n >= 12 ? "p" : "a";
   return (n % 12 || 12) + suffix;
+}
+
+/**
+ * Returns an ISO Date (2023-12-17) in dd/mm format for time series chart
+ * @param {ISO Date} - date
+ * @return {string} - formatted date as "1/12" in dd/mm format
+ */
+function formatDate(isoDateString) {
+  const realDate = isoDateString.split("-");
+  const month = removeLeadingZero(realDate[1]);
+  const day = removeLeadingZero(realDate[2]);
+  return `${day}/${month}`;
+}
+
+/**
+ * remove leading 0 from date string
+ * @param {string} - datefield that is passed "01"
+ */
+function removeLeadingZero(dateField) {
+  if (dateField.charAt(0) === "0") {
+    dateField = dateField.slice(1);
+  }
+  return dateField;
 }
 
 function formatURL(url) {
   let index = 0;
   // find & remove protocol (http, ftp, etc.) and get domain
-  if (url.indexOf('://') > -1) {
+  if (url.indexOf("://") > -1) {
     index = 2;
   }
   // find & remove port number
-  return url
-    .split('/')[index]
-    .split(':')[0]
-    .replace(new RegExp('%20', 'g'), ' ');
+  return url.split("/")[index].split(":")[0].replace(/%20/g, " ");
 }
 
-function formatFile(url) {
-  const splitUrls = url.split('/');
-  const domain = splitUrls[splitUrls.length - 1];
-  return domain.replace(new RegExp('%20', 'g'), ' ');
+/**
+ * @param {string} page is a url
+ * return url with protocol
+ * the page property from GA4 does not always contain the protocol,
+ * this will cause jekyll to prepend the base url to the link, breaking it
+ */
+function formatProtocol(page) {
+  page = formatURL(page);
+  if (page.indexOf("http") === 0) {
+    return;
+  }
+  page = `https://${page}`;
+  return page;
+}
+
+/**
+ * If filepath is a full URL we want to return the pathname to be consistent with the API
+ * top-downloads-yesterday.json sometimes returns a URL instead of pathname for the file_name field
+ * @param {string} filepath
+ * @returns {string} pathname should be consistent with file_name
+ */
+function formatFile(filepath) {
+  try {
+    const url = new URL(filepath);
+    return url.pathname;
+  } catch (e) {
+    return filepath;
+  }
 }
 
 export default {
@@ -80,7 +121,9 @@ export default {
   formatVisits,
   readableBigNumber,
   formatHour,
+  formatDate,
   floatToPercent,
   formatURL,
+  formatProtocol,
   formatFile,
 };

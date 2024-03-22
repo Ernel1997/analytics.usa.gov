@@ -1,13 +1,12 @@
-import d3 from 'd3';
+import d3 from "d3";
 
-const DISPLAY_THRESHOLD = 1;
+const DISPLAY_THRESHOLD = 0.1;
 /*
  * listify an Object into its key/value pairs (entries) and sorting by
  * numeric value descending.
  */
 function listify(obj) {
-  return d3.entries(obj)
-    .sort((a, b) => d3.descending(+a.value, +b.value));
+  return d3.entries(obj).sort((a, b) => d3.descending(+a.value, +b.value));
 }
 
 /*
@@ -32,7 +31,7 @@ function findProportionsOfMetric(list, valueExtractMethod) {
   const newList = [];
   values.forEach((x, i) => {
     newList.push(list[i]);
-    newList[i].proportion = ((x / total) * 100);
+    newList[i].proportion = (x / total) * 100;
   });
   return newList;
 }
@@ -55,7 +54,7 @@ function findProportionsOfMetricFromValue(list) {
  */
 function consolidateSmallValues(proportionsList, threshold) {
   const consolidatedList = [];
-  const other = { key: 'Other', proportion: 0, children: [] };
+  const other = { key: "Other", proportion: 0, children: [] };
   proportionsList.forEach((item) => {
     if (item.proportion >= threshold) {
       consolidatedList.push(item);
@@ -74,10 +73,25 @@ function consolidateSmallValues(proportionsList, threshold) {
  * @return a closure of consolidated smaller date from the proportions
  */
 function toTopPercents(dataSet, desiredKey) {
-  console.warn(dataSet);
-  const values = listify(dataSet.totals[desiredKey]);
+  const values = listify(dataSet.totals["by_" + desiredKey]);
   const proportions = findProportionsOfMetricFromValue(values);
   return consolidateSmallValues(proportions, DISPLAY_THRESHOLD);
+}
+
+/*
+ * @function toTopPercentsWithoutConsolidation
+ * @parameter dataSet - the data to be tranformed
+ * @parameter desiredKey - the key that we are interested
+ * @return a closure of proportions with values below the display threshold
+ * removed
+ */
+function toTopPercentsWithoutConsolidation(dataSet, desiredKey) {
+  const values = listify(dataSet.totals["by_" + desiredKey]);
+  const proportions = findProportionsOfMetricFromValue(values);
+  const filteredValues = values.filter((value, index) => {
+    return proportions[index].proportion >= DISPLAY_THRESHOLD;
+  });
+  return findProportionsOfMetricFromValue(filteredValues);
 }
 
 export default {
@@ -85,6 +99,7 @@ export default {
   findProportionsOfMetric,
   findProportionsOfMetricFromValue,
   toTopPercents,
+  toTopPercentsWithoutConsolidation,
   extractArrayValue,
   consolidateSmallValues,
 };

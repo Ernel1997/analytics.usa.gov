@@ -1,0 +1,49 @@
+{
+  "name": "devices",
+  "query": {
+    "dimensions": [
+      {
+        "name": "date"
+      },
+      {
+        "name": "deviceCategory"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "sessions"
+      }
+    ],
+    "dateRanges": [
+      {
+        "startDate": "30daysAgo",
+        "endDate": "yesterday"
+      }
+    ],
+    "orderBys": [
+      {
+        "dimension": {
+          "dimensionName": "date"
+        },
+        "desc": true
+      }
+    ],
+    "limit": "10000",
+    "property": "properties/393249053"
+  },
+  "meta": {
+    "name": "Devices",
+    "description": "30 days of desktop/mobile/tablet visits for all sites."
+  },
+  "totals": {
+    "visits": 1492377457,
+    "by_device": {
+      "mobile": 811958807,
+      "desktop": 656318825,
+      "(other)": 1938220,
+      "tablet": 19920488,
+      "smart tv": 2241117
+    }
+  },
+  "taken_at": "2024-03-11T13:59:08.677Z"
+}
